@@ -1,36 +1,45 @@
 package Sort;
 
-class QuickSort {
-    int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
+import Interfaces.QuickSortInterface;
+import Model.Room;
 
-            if (arr[j] < pivot) {
-                i++;
+import java.util.ArrayList;
 
+public class QuickSort implements QuickSortInterface {
 
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+    @Override
+    public ArrayList<Room> quicksort(ArrayList<Room> input){
+
+        if(input.size() <= 1){
+            return input;
+        }
+
+        int middle = (int) Math.ceil((double)input.size() / 2);
+        Room pivot = input.get(middle);
+
+        ArrayList<Room> less = new ArrayList<>();
+        ArrayList<Room> greater = new ArrayList<>();
+
+        for (int i = 0; i < input.size(); i++) {
+            if(input.get(i).getRoomPrice() <= pivot.getRoomPrice()){
+                if(i == middle){
+                    continue;
+                }
+                less.add(input.get(i));
+            }
+            else{
+                greater.add(input.get(i));
             }
         }
-
-
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-
-        return i + 1;
+        return concatenate(quicksort(less), pivot, quicksort(greater));
     }
 
-    void sort(int[] arr, int low, int high) {
-        if (low < high) {
+    private ArrayList<Room> concatenate(ArrayList<Room> less, Room pivot, ArrayList<Room> greater){
 
-            int pi = partition(arr, low, high);
+        ArrayList<Room> list = new ArrayList<>(less);
+        list.add(pivot);
+        list.addAll(greater);
 
-            sort(arr, low, pi - 1);
-            sort(arr, pi + 1, high);
-        }
+        return list;
     }
 }

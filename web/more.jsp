@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,42 +8,21 @@
 </head>
 <body>
 	<div id="frame">
-		<div id="header"></div>
+		<div id="header"><h1 id="logo">Book Room</h1></div>
 		<table border="1" id="table">
 			<tr class="tr">
-				<th>AMOUNT</th>
 				<th>NUMBER</th>
 				<th>PRICE</th>
 				<th>DESCRIPTION</th>
 			</tr>
-			<tr class="tr">
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><button class="button"><a href=""><h3>To Book</h3></a></button></th>
-			</tr>
-			<tr class="tr">
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><button class="button"><a href=""><h3>To Book</h3></a></button></th>
-			</tr>
-			<tr class="tr">
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><button class="button"><a href=""><h3>To Book</h3></a></button></th>
-			</tr>
-			<tr class="tr">
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><button class="button"><a href=""><h3>To Book</h3></a></button></th>
-			</tr>
+			<c:forEach var="room" items="${rooms}">
+				<tr class="tr">
+					<td>${room.getRoomNumber()}</td>
+					<td>${room.getRoomPrice()}</td>
+					<td>${room.getRoomDescription()}</td>
+					<th><button class="button"><a href='<c:url value="/book?number=${room.getRoomNumber()}" />'><h3>To Book</h3></a></button></th>
+				</tr>
+			</c:forEach>
 		</table>
 		<div id="footer"></div>
 	</div>
